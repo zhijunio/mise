@@ -14,6 +14,7 @@ redactions = [
 #
 [settings]
 experimental = true
+idiomatic_version_file_enable_tools = ["node", "java"]
 
 [settings.age]
 ssh_identity_files = ["~/.ssh/mise_private_key"]
@@ -21,31 +22,10 @@ ssh_identity_files = ["~/.ssh/mise_private_key"]
 # ---------------------------------------------------------------- tools ----
 
 [tools]
-cmake = "latest"
-claude = "latest"
-docker-compose = "latest"
-jbang = "0.141.0"
-python = "3.14"
-gradle = "9.7.1"
-docker-cli = "latest"
-maven = "3.9.16"
-kubectl = "latest"
-jq = "latest"
-go = "latest"
-uv = "latest"
-poetry = "latest"
-postgres = "latest"
-npm = "latest"
-rust = "latest"
-httpie-go = "latest"
-gh = "latest"
-k9s = "latest"
-direnv = "latest"
-sops = "latest"
-ripgrep = "latest"
-kubens = "latest"
-kubent = "latest"
-yt-dlp ="latest"
+# Java and Node remain here when configured; other Brew-managed tools live in
+# Brewfile so Homebrew is the single package manager for them.
+node = "24.18.0"
+java = ["21", "zulu-8", "25"]
 
 
 # ------------------------------------------------- environment variables ----
@@ -80,7 +60,6 @@ DIRENV_WARN_TIMEOUT = "1m"
 # which on Linux would clobber a real ssh-agent rather than leave it alone.
 SSH_AUTH_SOCK = "{% if os() == 'macos' %}{{ env.HOME }}/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock{% else %}{{ env.SSH_AUTH_SOCK | default(value='') }}{% endif %}"
 
-
 GITHUB_TOKEN = { age = "YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IHNzaC1lZDI1NTE5IDFPdmRTdyB0cmZqb3pmZEc4anNXdUM2VWhOcFowaW15dkJTZ081dWJkUDkycVRrUVJJCkNIdnZOeSs4SFM5NUN2Z0VEbUVJanI1SWQ0SlVxb00wNmNwN0o1WDFoZG8KLT4gY1xMaCtOWy1ncmVhc2UgZSZkWzhgIGVrXztuM2cgOVEjPHZmPGAKQVBoeGlENUcvaTlhREd1RERaS1oKLS0tIFFReWlYUWJnTHNMeVBRZ3ROMUFjTHZEVitqZTgvWHJIdGwyaFB1SysvVDAKacZ6fjMpwyVKKfnu1WErjK9dZUt+JUxjFvZCu4OyUlUhUxVgx3RzC+1yXkJtEbkN8/p5ucTvWtYv59bR36ZDSx8/NIls9uubGaOeFuQhXBQNDTn2ny3pJlDUXhHfM8xO9zup5xmtMMPFFPWVZIvH7LTpoY1FNDDhlcKlk9Q" }
 
 # ---------------------------------------------------------- shell aliases ----
@@ -88,6 +67,25 @@ GITHUB_TOKEN = { age = "YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IHNzaC1lZDI1NTE5IDFPdmRT
 
 [shell_alias]
 k = "kubectl"
+now='date +"%T"'
+nowdate='date +"%d-%m-%Y"'
+nowsec='date +"%s"'
+python="python3"
+dot='cd ~/.dotfiles'
+edit_env='vim ~/.env'
+edit_m2='vim ~/.m2/settings.xml'
+reload_shell='exec zsh -l'
+j8='mise shell java@zulu-8'
+j21='mise shell java@21'
+j25='mise shell java@25'
+grt='cd "$(git rev-parse --show-toplevel)"'
+gs='git status'
+gp='git push'
+gpf='git push --force'
+gpft='git push --follow-tags'
+gpl='git pull --rebase'
+gcl='git clone'
+gst='git stash'
 
 # ------------------------------------------------------- shell activation ----
 # Without this, nothing ever writes ~/.zshrc, so a brand new shell has no mise,
@@ -139,39 +137,11 @@ fi
 # Adopt apps already sitting in /Applications instead of failing on them.
 # Relevant when bootstrapping over an existing machine rather than a fresh one.
 [bootstrap.brew]
-adopt = true
-
-[bootstrap.brew.taps]
-"arconia-io/tap" = "https://github.com/arconia-io/homebrew-tap.git"
+adopt = false
 
 # ------------------------------------------------------- system packages ----
 
 [bootstrap.packages]
-
-# --- formulae ---
-"brew:antigen" = { os = ["macos"] }
-"brew:age" = { os = ["macos"] }
-"brew:arconia-io/tap/arconia-cli" = { os = ["macos"] }
-"brew:bash" = { os = ["macos"] }
-"brew:bitwarden-cli" = { os = ["macos"] }
-"brew:curl" = { os = ["macos"] }
-"brew:ffmpeg-full" = { os = ["macos"] }
-"brew:git" = { os = ["macos"] }
-"brew:gnupg" = { os = ["macos"] }
-"brew:graphviz" = { os = ["macos"] }
-"brew:grpcurl" = { os = ["macos"] }
-"brew:imagemagick-full" = { os = ["macos"] }
-"brew:libpq" = { os = ["macos"] }
-"brew:mongocli" = { os = ["macos"] }
-"brew:mongosh" = { os = ["macos"] }
-"brew:pandoc" = { os = ["macos"] }
-"brew:tree" = { os = ["macos"] }
-"brew:watch" = { os = ["macos"] }
-"brew:wget" = { os = ["macos"] }
-"brew:hey" = { os = ["macos"] }
-"brew:ytt" = { os = ["macos"] }
-"brew:zimg" = { os = ["macos"] }
-"brew:zsh" = { os = ["macos"] }
 
 # --- linux (apt self-gates; these never run on macOS) ---
 # Deliberately minimal: enough to work in a container. The brew list above is
@@ -187,20 +157,14 @@ adopt = true
 "apt:tree" = "latest"
 "apt:wget" = "latest"
 
-"brew:git-gui" = { version = "latest", os = ["macos"] }
-"brew-cask:claude" = { version = "latest", os = ["macos"] }
-"brew-cask:codex" = { version = "latest", os = ["macos"] }
-"brew-cask:google-chrome" = { version = "latest", os = ["macos"] }
-"brew-cask:grammarly-desktop" = { version = "latest", os = ["macos"] }
-"brew-cask:obsidian" = { version = "latest", os = ["macos"] }
-"brew-cask:telegram" = { version = "latest", os = ["macos"] }
-"brew-cask:visual-studio-code" = { version = "latest", os = ["macos"] }
-"brew-cask:sqlcl" = { version = "latest", os = ["macos"] }
 # ----------------------------------------------------------------- task ----
 
 [tasks.bootstrap]
-description = "Post-install sanity checks"
+description = "安装 Homebrew 软件并执行基础检查"
 run = """
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  HOMEBREW_NO_AUTO_UPDATE=1 brew bundle install --file '{{ config_root }}/Brewfile' --no-upgrade
+fi
 echo "java:      $(java --version 2>&1 | head -1)"
 echo "editor:    $EDITOR"
 [ -d "$ZSH" ] && echo "oh-my-zsh: $ZSH" || echo "oh-my-zsh: MISSING"
