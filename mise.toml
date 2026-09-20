@@ -1,6 +1,6 @@
 # see bootstrap.sh for a way to set everything up 
 
-min_version = "2026.8.0"
+min_version = "2026.9.11"
 
 # Mask these in captured task output. (Does not encrypt the file.)
 redactions = [
