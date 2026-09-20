@@ -100,6 +100,6 @@ echo "ssh key ok: $(ssh-keygen -lf "$KEY")"
 # key is in place, so the adopted config's [env] decrypts on load.
 # clones repo -> ~/.config/mise, then packages -> repos -> tools -> bootstrap task.
 # NOTE: pulls from GitHub, so local mise.toml edits do nothing until pushed.
-mise bootstrap --adopt https://github.com/joshlong/mise.git --yes
+mise bootstrap --adopt https://github.com/zhijunio/mise.git --yes
 
 
