@@ -24,9 +24,7 @@ ssh_identity_files = ["~/.ssh/mise_private_key"]
 cmake = "latest"
 claude = "latest"
 docker-compose = "latest"
-java = "graalvm-community-25.0.2"
 jbang = "0.141.0"
-dotnet-core = "latest"
 python = "3.14"
 gradle = "9.7.1"
 docker-cli = "latest"
@@ -189,14 +187,12 @@ adopt = true
 "apt:tree" = "latest"
 "apt:wget" = "latest"
 
-"flatpak:com.spotify.Client" = "latest"
 "brew:git-gui" = { version = "latest", os = ["macos"] }
 "brew-cask:claude" = { version = "latest", os = ["macos"] }
 "brew-cask:codex" = { version = "latest", os = ["macos"] }
 "brew-cask:google-chrome" = { version = "latest", os = ["macos"] }
 "brew-cask:grammarly-desktop" = { version = "latest", os = ["macos"] }
 "brew-cask:obsidian" = { version = "latest", os = ["macos"] }
-"brew-cask:opencode-desktop" = { version = "latest", os = ["macos"] }
 "brew-cask:telegram" = { version = "latest", os = ["macos"] }
 "brew-cask:visual-studio-code" = { version = "latest", os = ["macos"] }
 "brew-cask:sqlcl" = { version = "latest", os = ["macos"] }
