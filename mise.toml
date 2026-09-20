@@ -56,11 +56,9 @@ yt-dlp ="latest"
 # Prepended to PATH, highest precedence first. 
 _.path = [
   "/opt/homebrew/opt/curl/bin",
-  "/opt/homebrew/opt/ruby/bin",
   "/opt/homebrew/opt/libpq/bin",
   "/opt/homebrew/opt/rustup/bin",
   "{{env.HOME}}/bin",
-  "{{env.HOME}}/josh-env/bin",
   "{{env.HOME}}/.docker/bin",
   # brew shellenv's PATH half; last so the opt/* overrides above win.
   "/opt/homebrew/bin",
@@ -130,7 +128,6 @@ ZSH_THEME="robbyrussell"   # change me
 plugins=(git)              # change me
 [ -r "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 
-command -v rbenv  >/dev/null && eval "$(rbenv init - zsh)"
 command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
 if [ "$TERM_PROGRAM" = "kiro" ] && command -v kiro >/dev/null; then . "$(kiro --locate-shell-integration-path zsh)"; fi
@@ -176,7 +173,6 @@ adopt = true
 "brew:mongocli" = { os = ["macos"] }
 "brew:mongosh" = { os = ["macos"] }
 "brew:pandoc" = { os = ["macos"] }
-"brew:rbenv" = { os = ["macos"] }
 "brew:tree" = { os = ["macos"] }
 "brew:watch" = { os = ["macos"] }
 "brew:wget" = { os = ["macos"] }
